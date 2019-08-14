@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+<!--Repeat any element with logic and handle event based on specific object reference-->
+<script src="Scripts/angular.js"></script>
+<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+<script>
+     var app= angular.module("DemoModule",[]);
+            app.controller("HomeController",function($scope){
+       $scope.cars=[
+           {
+            Id:1,
+            CarName:"Bugati-007",
+            Price:150000,
+            Pic:"Images/car1.jpg",
+            Likes:0,
+            Dislikes:0
+       },
+       {
+           Id:2,
+           CarName:"Mahindra-XUV",
+           Price:891999.12,
+           Pic:"Images/mahindra.jpg",
+           Likes:0,
+           Dislikes:0
+       }
+       ];
+       $scope.LikesCounter=function(car){
+           car.Likes++;
+       }
+       $scope.DislikesCounter=function(car){
+           car.Dislikes++;
+       }
+      $scope.favourites=[];
+      $scope.AddToFavourites=function(car){
+          $scope.favourites.push(car);
+      }
+       
+    })
+</script>
+</head>
+<body ng-app="DemoModule" ng-controller="HomeController">
+    <div class="container">
+    <h2 class="text-center">Cars Gallery</h2>
+   <div class="row card-deck">
+      <div class="card" ng-repeat="car in cars">
+         <div class="card-header">
+             <h3>{{car.CarName}}</h3>
+         </div>
+         <div class="car-body">
+             <img src="{{car.Pic}}" class="img-thumbnail" width="200" height="200">
+         </div>
+         <div class="card-footer">
+             <h3>{{car.Price}}</h3>
+             {{car.Likes}}
+             <a href="">
+             <img src="like.png" width="30" height="30" ng-click="LikesCounter(car)">
+            </a>
+            {{car.Dislikes}}
+            <a href="">
+                <img src="dislike.png" width="35" height="30" ng-click="DislikesCounter(car)">
+            </a>
+            <button ng-click="AddToFavourites(car)" class="btn btn-success">Add To Favourites</button>
+         </div>
+   </div>
+       
+    <table class="table table-hover">
+        <thead class="bg-danger" >
+            <th>Product Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Preview</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in favourites">
+                <td>{{item.Id}}</td>
+                <td>{{item.CarName}}</td>
+                <td>{{item.Price}}</td>
+                <td><img src="{{item.Pic}}" width="200" height="130" class="img-thumbnail"> </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    </body>
+</html>
