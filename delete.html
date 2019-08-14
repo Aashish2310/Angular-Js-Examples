@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--Dynamically add or remove into a collection using array functions-->
+        <script src="Scripts/angular.js"></script>
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+        <script>
+        var app=angular.module("DemoApp",[]);
+        app.controller("HomeController",function($scope){
+            $scope.products=[
+                {
+                    Id:1,
+                    Name:"Samsung Tv",
+                    Price:45000.12
+                },
+                {
+                    Id:2,
+                    Name:"Mobile",
+                    Price:13599.78
+                }
+                ];
+                $scope.newProduct;
+                $scope.AddProduct=function(prod){
+                    prod.Id=$scope.products.length+1;
+                    $scope.newProduct={
+                        Id:prod.Id,
+                        Name:prod.Name,
+                        Price:prod.Price
+                    };
+                    $scope.products.push($scope.newProduct);
+                    alert("Record Inserted");
+                    prod.Name="";
+                    prod.Price="";
+                }
+                $scope.DeleteClick=function(id){
+                    $scope.index=id-1;
+                    var x = confirm("Are You Sure Want To Delete?");
+                    if(x==true)
+                    {
+                        $scope.products.splice($scope.index,1);
+                    }
+                }
+        })
+        </script>
+        <body ng-app="DemoApp" ng-controller="HomeController">
+           <div class="container">
+               <div>
+                   <form>
+                       <h3>Add Products</h3>
+                       <div class="form-group">
+                           <label>Product Id</label>
+                           <input ng-model="prod.Id" type="number" readonly value="{{products.length+1}}" class="form-control">
+                       </div>
+                       <div class="form-group">
+                           <label>Name</label>
+                           <input ng-model="prod.Name" type="text" class="form-control">
+                       </div>
+                       <div class="form-group">
+                           <label>Price</label>
+                           <input type="text" ng-model="prod.Price" class="form-control">
+                       </div>
+                       <div class="form-group">
+                           <button ng-click="AddProduct(prod)" class="btn btn-primary">Add Products</button>
+                       </div>
+                   </form>
+               </div>
+               <h3>Product List</h3>
+               <table class="table table-hover">
+                  <thead class="bg-success text-white">
+                      <th>Product Id</th>
+                      <th>Name</th>
+                      <th>Price</th>
+                      <th>Actions</th>
+                  </thead> 
+                  <tbody>
+                      <tr ng-repeat="product in products">
+                          <td>{{product.Id}}</td>
+                          <td>{{product.Name}}</td>
+                          <td>{{product.Price}}</td>
+                          <td><button ng-click="DeleteClick(product.Id)" class="btn btn-danger">Delete</button></td>
+
+                      </tr>
+                  </tbody>
+               </table>
+           </div>
+        </body>
+    </head>
+</html>
